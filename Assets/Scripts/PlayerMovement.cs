@@ -1,15 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
 	public float speed;
+	public Text countText;
+	public Text winText;
 
+	private int count;
+	private int numberOfCollectables;
 	private Rigidbody rb;
 
 	void Start ()
 	{
 		rb = GetComponent<Rigidbody> ();
+		count = 0;
+		SetCountText ();
+		winText.text = "";
+		numberOfCollectables = 12;
 	}
 	
 	void FixedUpdate () 
@@ -26,6 +35,18 @@ public class PlayerMovement : MonoBehaviour {
 		if (other.gameObject.CompareTag ("collectable"))
 		{
 			other.gameObject.SetActive (false);
+			count++;
+			SetCountText ();
 		}
+	}
+	void SetCountText () 
+	{
+		countText.text = "Count: " + count.ToString ();
+		//FINISHME
+		if (count >= numberOfCollectables) 
+		{
+			winText.text = "You WIN!";
+		}
+
 	}
 }
